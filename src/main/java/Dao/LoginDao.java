@@ -4,6 +4,7 @@
  */
 package Dao;
 
+import Modelo.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -12,5 +13,5 @@ import java.sql.PreparedStatement;
  * @author lucho
  */
 public interface LoginDao {
-    public login log(String correo, String contrasenia);
+    public Login log(String Usuario, String contrasenia, String rol);
 }

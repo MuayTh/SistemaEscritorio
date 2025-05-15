@@ -18,5 +18,11 @@ public class Login {
     private String usuario;
     private String contrasenia;
     private String rol;
-    
+    public Login(int idUsuario, String usuario, String contrasenia, String rol){
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
+    }
+    public Login(){}
 }
