@@ -4,11 +4,11 @@
  */
 package Principal;
 
-import Proyecto.Alojamiento;
-import Proyecto.Cliente;
-import Proyecto.Empleado;
-import Proyecto.EstadoHabitacion;
-import Proyecto.Reserva;
+import Modelo.Alojamiento;
+import Modelo.Cliente;
+import Modelo.Empleado;
+import Modelo.EstadoHabitacion;
+import Modelo.Reserva;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

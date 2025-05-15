@@ -6,7 +6,7 @@ package Implementacion;
 
 import Conexion.ConexionSQL;
 import Dao.EmpleadoDao;
-import Proyecto.Empleado;
+import Modelo.Empleado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

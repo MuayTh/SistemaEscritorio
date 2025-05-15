@@ -4,7 +4,7 @@
  */
 package Dao;
 
-import Proyecto.Empleado;
+import Modelo.Empleado;
 import java.util.List;
 
 /**
