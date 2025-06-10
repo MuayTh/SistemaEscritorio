@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -59,10 +59,12 @@ public class ImplEmpleadoDao implements EmpleadoDao{
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                Empleado emp = new Empleado(1, "codigo", "nombre");
-                emp.setId(rs.getInt("id"));
-                emp.setCodigo(rs.getString("codigo"));
-                emp.setNombre(rs.getString("nombre"));
+                Empleado emp = new Empleado(
+                rs.getInt("id"),
+                rs.getString("codigo"),
+                rs.getString("nombre")
+                );
+                
                 ListaEmpleados.add(emp);
                 
             }

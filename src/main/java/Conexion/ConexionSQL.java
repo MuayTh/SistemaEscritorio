@@ -16,7 +16,7 @@ public class ConexionSQL{
     private static final String CONTRASEÑA = "Misteriox101";
     private static Connection conexion = null;
     
-    public void ConexionSQL(){
+    public ConexionSQL(){
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);

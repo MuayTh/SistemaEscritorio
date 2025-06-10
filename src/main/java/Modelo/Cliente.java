@@ -4,24 +4,24 @@
  */
 package Modelo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author lucho
  */
+@Getter
+@Setter
 public class Cliente extends Persona{
-    private String dni;
-
-    public Cliente(String dni, String nombre) {
+    private int idCliente;
+    private String dni, apellidos;
+   
+    public Cliente(int idCliente, String dni, String nombre, String apellidos) {
         super(nombre);
         this.dni = dni;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
+        this.idCliente = idCliente;
+        this.apellidos = apellidos;
     }
 
      @Override
