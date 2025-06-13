@@ -46,7 +46,8 @@ public class ImplEmpleadoDao implements CrudGenerica<Empleado>{
 
     @Override
     public void Modificar(Empleado empleado) {
-        String sql = "UPDATE Empleado SET Nombre=?, Apellidos=?, Codigo=?, Dni=? WHERE idEmpleado=?";
+        String sql = "UPDATE Empleado SET Nombre=?, Apellidos=?, Codigo=?, Dni=? "
+                + "WHERE idEmpleado=?";
         try{
             con = ConexionSQL.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -75,7 +76,7 @@ public class ImplEmpleadoDao implements CrudGenerica<Empleado>{
 
     @Override
     public Empleado BuscarPorId(int idEmpleado) {
-String sql = "SELECT * FROM Empleado WHERE idEmpleado=?";
+        String sql = "SELECT * FROM Empleado WHERE idEmpleado=?";
         try{
             ps.setInt(1, idEmpleado);
             rs = ps.executeQuery(sql);
@@ -88,14 +89,14 @@ String sql = "SELECT * FROM Empleado WHERE idEmpleado=?";
                 );
             }
         } catch (SQLException e) {
-            Logger.getLogger(ImplClienteDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;    }
 
     @Override
     public List<Empleado> listar() {
-List<Empleado> empleado = new ArrayList<>();
-        String sql= "SELECT * FROM Cliente";
+        List<Empleado> empleado = new ArrayList<>();
+        String sql= "SELECT * FROM Empleado";
         try{
             con = ConexionSQL.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -110,10 +111,8 @@ List<Empleado> empleado = new ArrayList<>();
                 ));
             }
         }catch(SQLException e){
-            Logger.getLogger(ImplClienteDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
         }
-        return empleado;    }
-    
-    
-    
+        return empleado;    
+    }  
 }

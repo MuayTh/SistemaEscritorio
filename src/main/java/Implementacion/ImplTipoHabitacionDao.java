@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,18 +38,37 @@ public class ImplTipoHabitacionDao implements CrudGenerica<TipoHabitacion>{
             ps.setString(4, tipoHabitacion.getImagenRuta());
             ps.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ImplTipoHabitacionDao.class.getName()).log(Level.SEVERE, null, e);
         }    
     }
 
     @Override
-    public void Modificar(TipoHabitacion entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public void Modificar(TipoHabitacion tipoHabitacion) {
+        String sql = "UPDATE Empleado SET Nombre=?, Descripcion=?, Precio=?, imagenRuta=? "
+            + "WHERE idTipoHabitacion=?";
+        try{
+            con = ConexionSQL.obtenerConexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tipoHabitacion.getNombre());
+            ps.setString(2, tipoHabitacion.getDescripcion());
+            ps.setDouble(3, tipoHabitacion.getPrecio());
+            ps.setString(4, tipoHabitacion.getImagenRuta());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ImplTipoHabitacionDao.class.getName()).log(Level.SEVERE, null, e);
+        }    }
 
     @Override
-    public void Eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Eliminar(int idTipoHabitacion) {
+        String sql = "DELETE FROM TipoHabitacion WHERE idTipoHabitacion=?";
+        try{
+            con = ConexionSQL.obtenerConexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idTipoHabitacion);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }    
     }
 
     @Override
@@ -58,7 +78,26 @@ public class ImplTipoHabitacionDao implements CrudGenerica<TipoHabitacion>{
 
     @Override
     public List<TipoHabitacion> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<TipoHabitacion> tipoHabitacion = new ArrayList<>();
+        String sql= "SELECT * FROM TipoHabitacion";
+        try{
+            con = ConexionSQL.obtenerConexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            //rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                tipoHabitacion.add(new TipoHabitacion(
+                    rs.getInt("idTipoHabitacion"),
+                    rs.getString("Nombre"),
+                    rs.getString("Descripcion"),
+                    rs.getDouble("Precio"),
+                    rs.getString("ImagenRuta")
+                ));
+            }
+        }catch(SQLException e){
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return tipoHabitacion;    
     }
     
 }
