@@ -15,13 +15,12 @@ import lombok.Setter;
 @Setter
 public class Cliente extends Persona{
     private int idCliente;
-    private String dni, apellidos;
+    private String dni;
    
-    public Cliente(int idCliente, String dni, String nombre, String apellidos) {
-        super(nombre);
+    public Cliente(int idCliente,String nombre, String apellidos,  String dni) {
+        super(nombre, apellidos);
         this.dni = dni;
         this.idCliente = idCliente;
-        this.apellidos = apellidos;
     }
 
      @Override

@@ -8,31 +8,35 @@ package Modelo;
  *
  * @author lucho
  */
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Alojamiento extends Habitacion{
-    private String numAlojamiento;
-    private String fechaInicioAlojamiento, fechaSalidaAlojamiento;
-    private Cliente cli;
-    private Empleado emp;
-    private double pagoDias;
-    public Alojamiento(String numAlojamiento, String fechaInicioAlojamiento, String fechaSalidaAlojamiento, Cliente cli, Empleado emp, int numeroHabitacion, String descripcion, double precio, String estadoHabitacion) {
-        super(numeroHabitacion, descripcion, precio, estadoHabitacion);
-        this.numAlojamiento = numAlojamiento;
-        this.fechaInicioAlojamiento = fechaInicioAlojamiento;
-        this.fechaSalidaAlojamiento = fechaSalidaAlojamiento;
-        this.cli = cli;
-        this.emp = emp;
+public class Alojamiento{
+    private int idAlojamiento;
+    private Reserva reserva; // puede ser null
+    private Cliente cliente;
+    private Empleado empleado;
+    private Habitacion habitacion;
+    private LocalDate fechaAlojamiento;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFinal;
+
+    public Alojamiento(int idAlojamiento, Reserva reserva, Cliente cliente, Empleado empleado, Habitacion habitacion, LocalDate fechaAlojamiento, LocalDate fechaInicio, LocalDate fechaFinal) {
+        this.idAlojamiento = idAlojamiento;
+        this.reserva = reserva;
+        this.cliente = cliente;
+        this.empleado = empleado;
+        this.habitacion = habitacion;
+        this.fechaAlojamiento = fechaAlojamiento;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
     }
 
     @Override
     public String toString() {
-        return "Alojamiento{" + "numAlojamiento=" + numAlojamiento + 
-                ", fechaInicioAlojamiento=" + fechaInicioAlojamiento + ", fechaSalidaAlojamiento=" + fechaSalidaAlojamiento + 
-                ", Datos del cliente=" + cli + ", Empleado que registró=" + emp + '}';
-    }
-    
+        return "Alojamiento{" + "idAlojamiento=" + idAlojamiento + ", reserva=" + reserva + ", cliente=" + cliente + ", empleado=" + empleado + ", habitacion=" + habitacion + ", fechaAlojamiento=" + fechaAlojamiento + ", fechaInicio=" + fechaInicio + ", fechaFinal=" + fechaFinal + '}';
+    }  
 }

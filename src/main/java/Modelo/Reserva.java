@@ -8,30 +8,36 @@ package Modelo;
  *
  * @author lucho
  */
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Reserva extends Habitacion{
-    private String numReserva;
-    private String fechaReserva, fechaIngreso, fechaSalida;
-    private Cliente cli;
+public class Reserva{
+    private int idReserva;
+    private Cliente cliente;
+    private Habitacion habitacion;
+    private LocalDate fechaReserva;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+    private EstadoReserva estado; //COMPOSICION
 
-    public Reserva(String numReserva, String fechaReserva, String fechaIngreso, String fechaSalida, Cliente cli, int numeroHabitacion, String descripcion, double precio, String estadoHabitacion) {
-        super(numeroHabitacion, descripcion, precio, estadoHabitacion);
-        this.numReserva = numReserva;
+    public Reserva(int idReserva, Cliente cliente, Habitacion habitacion, LocalDate fechaReserva, LocalDate fechaInicio, LocalDate fechaFin, EstadoReserva estado) {
+        this.idReserva = idReserva;
+        this.cliente = cliente;
+        this.habitacion = habitacion;
         this.fechaReserva = fechaReserva;
-        this.fechaIngreso = fechaIngreso;
-        this.fechaSalida = fechaSalida;
-        this.cli = cli;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "numReserva=" + numReserva + 
-        ", fechaReserva=" + fechaReserva + ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + ", "
-                + "cli=" + cli + '}';
+        return "Reserva{" + "idReserva=" + idReserva + ", cliente=" + cliente + ", habitacion=" + habitacion + ", fechaReserva=" + fechaReserva + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", estado=" + estado + '}';
     }
+
+    
     
 }   

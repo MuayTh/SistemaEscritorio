@@ -12,11 +12,13 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
-public class Persona {
-    private String nombre;
+public abstract class Persona {
+    protected String nombre;
+    protected String apellido;
 
-    public Persona(String nombre) {
+    public Persona(String nombre, String apellido) {
         this.nombre = nombre;
+        this.apellido = apellido;
     }
-    
 }
+

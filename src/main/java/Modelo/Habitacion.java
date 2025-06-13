@@ -14,16 +14,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Habitacion {
-    private int numeroHabitacion;
-    private String descripcion;
-    private double precio;
-    private String estadoHabitacion;
+    private int idHabitacion;
+    private String numero;
+    private int piso;
+    private EstadoHabitacion estado;
+    private TipoHabitacion tipoHabitacion;
 
-    public Habitacion(int numeroHabitacion, String descripcion, double precio, String estadoHabitacion) {
-        this.numeroHabitacion = numeroHabitacion;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.estadoHabitacion = estadoHabitacion;
+    public Habitacion(int idHabitacion, String numero, int piso, EstadoHabitacion estado, TipoHabitacion tipoHabitacion) {
+        this.idHabitacion = idHabitacion;
+        this.numero = numero;
+        this.piso = piso;
+        this.estado = estado;
+        this.tipoHabitacion = tipoHabitacion;
     }
     
 }

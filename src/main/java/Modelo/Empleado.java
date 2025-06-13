@@ -13,16 +13,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Empleado extends Persona{
-    private int id;
+    private int idEmpleado;
     private String codigo;
 
-    public Empleado(String nombre) {
-        super(nombre);
+    public Empleado(String nombre, String apellidos) {
+        super(nombre, apellidos);
     }
-    
-    
-    public Empleado(int id,String codigo, String nombre) {
-        super(nombre);
+
+    public Empleado(int idEmpleado, String codigo, String nombre, String apellido) {
+        super(nombre, apellido);
+        this.idEmpleado = idEmpleado;
         this.codigo = codigo;
     }
 
