@@ -5,6 +5,7 @@
 package Implementacion;
 
 import Conexion.ConexionSQL;
+import Dao.CrudGenerica;
 import Dao.EmpleadoDao;
 import Modelo.Empleado;
 import java.sql.Connection;
@@ -22,102 +23,97 @@ import javax.swing.JOptionPane;
  *
  * @author lucho
  */
-public class ImplEmpleadoDao implements EmpleadoDao{
+public class ImplEmpleadoDao implements CrudGenerica<Empleado>{
     ConexionSQL cn = new ConexionSQL();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+
     @Override
-    public boolean RegistrarEmpleado(Empleado empleado) {
-        String sql = "Insert into Empleados(id, codigo, nombre) values (?,?,?)";
+    public void Crear(Empleado empleado) {
+        String sql = "INSERT INTO Empleado(idEmpleado, Nombre, Apellidos, Codigo) values(?,?,?,?)";
         try{
             con = ConexionSQL.obtenerConexion();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, empleado.getId());
-            ps.setString(2, empleado.getCodigo());
-            ps.setString(3, empleado.getNombre());
-            ps.execute();
-            return true;
-        } catch(SQLException e ){
-            JOptionPane.showMessageDialog(null, e.toString());
-            return false;
-        } finally{
-            try{
-                con.close();
-            } catch(SQLException e){
-                System.out.println(e.toString());
-            }
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getApellido());
+            ps.setString(3, empleado.getCodigo());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
     @Override
-    public List<Empleado> listarEmpleados() {
-        List<Empleado> ListaEmpleados = new ArrayList<>();
-        String sql = "Select * from empleados";
+    public void Modificar(Empleado empleado) {
+        String sql = "UPDATE Empleado SET Nombre=?, Apellidos=?, Codigo=?, Dni=? WHERE idEmpleado=?";
+        try{
+            con = ConexionSQL.obtenerConexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getApellido());
+            ps.setString(3, empleado.getCodigo());
+            ps.setInt(4, empleado.getIdEmpleado());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    @Override
+    public void Eliminar(int idEmpleado) {
+        String sql = "DELETE FROM Empleado WHERE idEmpleado=?";
+        try{
+            con = ConexionSQL.obtenerConexion();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idEmpleado);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ImplEmpleadoDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    @Override
+    public Empleado BuscarPorId(int idEmpleado) {
+String sql = "SELECT * FROM Empleado WHERE idEmpleado=?";
+        try{
+            ps.setInt(1, idEmpleado);
+            rs = ps.executeQuery(sql);
+            if (rs.next()) {
+                return new Empleado(
+                    rs.getInt("idEmpleado"),
+                    rs.getString("Nombre"),
+                    rs.getString("Apellidos"),
+                    rs.getString("Codigo")
+                );
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ImplClienteDao.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return null;    }
+
+    @Override
+    public List<Empleado> listar() {
+List<Empleado> empleado = new ArrayList<>();
+        String sql= "SELECT * FROM Cliente";
         try{
             con = ConexionSQL.obtenerConexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
-                Empleado emp = new Empleado(
-                rs.getInt("id"),
-                rs.getString("codigo"),
-                rs.getString("nombre")
-                );
-                
-                ListaEmpleados.add(emp);
-                
+            //rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                empleado.add(new Empleado(
+                    rs.getInt("idEmpleado"),
+                    rs.getString("Nombre"),
+                    rs.getString("Apellidos"),
+                    rs.getString("Codigo")
+                ));
             }
-        }catch (SQLException e){
-            System.out.println(e.toString());
+        }catch(SQLException e){
+            Logger.getLogger(ImplClienteDao.class.getName()).log(Level.SEVERE, null, e);
         }
-    return ListaEmpleados;
-    }
-
-    @Override
-    public boolean modificarEmpleado(Empleado empleado) {
-        String sql = "update Empleados set codigo=?, nombre=? where id=?";
-        try{
-            ps = con.prepareStatement(sql);
-            ps.setString(1, empleado.getCodigo());
-            ps.setString(2, empleado.getNombre());
-            ps.setInt(3, empleado.getId());
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.toString());
-            return false;
-        }finally{
-            try{
-                con.close();
-            }catch(SQLException e){
-                System.out.println(e.toString());
-            }
-        }
-    }
-
-    @Override
-    public boolean eliminarEmpleado(int id) {
-        String sql = "DELETE from Empleados where id=?";
-        try{
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-            return true;
-        } catch (SQLException e){
-            System.out.println(e.toString());
-            return false;
-        } finally{
-            try {
-                con.close();
-            } catch(SQLException e){
-                System.out.println(e.toString());
-            }
-        }
-    }
-
-    @Override
-    public Empleado BuscarEmpleadoPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        return empleado;    }
+    
+    
     
 }

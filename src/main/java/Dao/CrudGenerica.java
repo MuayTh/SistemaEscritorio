@@ -4,6 +4,8 @@
  */
 package Dao;
 
+import java.util.List;
+
 /**
  *
  * @author lucho
@@ -13,5 +15,5 @@ public interface CrudGenerica<T> {
     public void Modificar(T entidad);
     public void Eliminar(int id);
     public T     BuscarPorId(int id);
-    
+    public List<T> listar();
 }
