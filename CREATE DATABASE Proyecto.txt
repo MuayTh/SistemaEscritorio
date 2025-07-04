@@ -1,0 +1,87 @@
+CREATE DATABASE Proyecto;
+GO
+
+USE Proyecto;
+GO
+CREATE TABLE Cliente (
+    idCliente INT PRIMARY KEY IDENTITY(1,1),
+    dni VARCHAR(20) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Empleado (
+    idEmpleado INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    codigo VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE Login (
+    idLogin INT PRIMARY KEY IDENTITY(1,1),
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasenia VARCHAR(100) NOT NULL,
+    rol VARCHAR(20) NOT NULL CHECK (rol IN ('ADMINISTRADOR', 'EMPLEADO'))
+);
+
+CREATE TABLE TipoHabitacion (
+    idTipoHabitacion INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio DECIMAL(10,2) NOT NULL,
+    imagenRuta VARCHAR(255)
+);
+
+CREATE TABLE Habitacion (
+    idHabitacion INT PRIMARY KEY IDENTITY(1,1),
+    numero VARCHAR(10) NOT NULL,
+    piso INT NOT NULL,
+    estado VARCHAR(30) NOT NULL, -- DISPONIBLE, OCUPADO, EN_MANTENIMIENTO
+    idTipoHabitacion INT NOT NULL,
+    FOREIGN KEY (idTipoHabitacion) REFERENCES TipoHabitacion(idTipoHabitacion)
+);
+
+CREATE TABLE Reserva (
+    idReserva INT PRIMARY KEY IDENTITY(1,1),
+    idCliente INT NOT NULL,
+    idHabitacion INT NOT NULL,
+    fechaReserva DATE NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE NOT NULL,
+    estado VARCHAR(30) NOT NULL, -- PENDIENTE, CONFIRMADA, CANCELADA
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+    FOREIGN KEY (idHabitacion) REFERENCES Habitacion(idHabitacion)
+);
+
+CREATE TABLE Alojamiento (
+    idAlojamiento INT PRIMARY KEY IDENTITY(1,1),
+    idReserva INT, -- puede ser NULL
+    idCliente INT NOT NULL,
+    idEmpleado INT NOT NULL,
+    idHabitacion INT NOT NULL,
+    fechaAlojamiento DATE NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaFinal DATE NOT NULL,
+    FOREIGN KEY (idReserva) REFERENCES Reserva(idReserva),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado),
+    FOREIGN KEY (idHabitacion) REFERENCES Habitacion(idHabitacion)
+);
+
+CREATE TABLE Consumo (
+    idConsumo INT PRIMARY KEY IDENTITY(1,1),
+    idAlojamiento INT NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    cantidad INT NOT NULL,
+    precioUnitario DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (idAlojamiento) REFERENCES Alojamiento(idAlojamiento)
+);
+
+CREATE TABLE Factura (
+    idFactura INT PRIMARY KEY IDENTITY(1,1),
+    idAlojamiento INT NOT NULL,
+    fechaEmision DATE NOT NULL,
+    totalConsumo DECIMAL(10,2) NOT NULL,
+    totalAlojamiento DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (idAlojamiento) REFERENCES Alojamiento(idAlojamiento)
+);
